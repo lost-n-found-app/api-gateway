@@ -1,0 +1,35 @@
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: user-service
+#          uri: http://localhost:8082
+#          predicates:
+#            - Path=/user/**
+#          filters:
+#            - RewritePath=/user/(?<segment>.*), /$\\{segment} # Rewrite path to match service
+#        - id: product-service
+#          uri: http://localhost:8083  # The URI of the Order Service
+#          predicates:
+#            - Path=/product/**          # Routes starting with /order/** will be forwarded
+#          filters:
+#            - RemoveRequestHeader=Authorization # Optional: Remove or modify headers
+
+    spring:
+      security:
+        oauth2:
+          client:
+            registration:
+              google:
+                client-id: 630649486741-a5060vjq12tt6uvqgm0p13r2g6720t4m.apps.googleusercontent.com
+                client-secret: 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
+                scope:  profile, email
+                redirect-uri: "http://localhost:8081/login/oauth2/code/google"
+                authorization-grant-type: authorization_code
+                client-name: Google
+
+    server:
+      port: 8081
+      reactive:
+        session:
+          timeout: 900s
