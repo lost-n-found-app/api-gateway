@@ -14,7 +14,7 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
-                .authorizeExchange(exchanges -> exchanges.anyExchange().authenticated())
+                .authorizeExchange(exchanges -> exchanges.anyExchange().permitAll())
                 .oauth2Login(Customizer.withDefaults());
         return http.build();
     }
