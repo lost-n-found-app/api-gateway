@@ -1,4 +1,14 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/user_db
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
   security:
     oauth2:
       client:
@@ -10,8 +20,10 @@ spring:
             redirect-uri: "http://localhost:8080/login/oauth2/code/google"
             authorization-grant-type: authorization_code
             client-name: Google
+
   application:
     name: API-GATEWAY
+
   cloud:
     gateway:
       routes:
@@ -19,11 +31,21 @@ spring:
           uri: lb://USERSERVICE
           predicates:
             - Path=/users/**
+
 server:
   port: 8080
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+
+twilio:
+  account:
+    sid: ACef8ced0aaead209438e88b000c84b5f4
+  auth:
+    token: 1e26e74c2d4ece8b6d6f8f24487cd36b
+  phone:
+    number: +1 878 688 7454
