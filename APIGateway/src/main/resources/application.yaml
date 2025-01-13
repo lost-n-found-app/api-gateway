@@ -1,17 +1,26 @@
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 630649486741-a5060vjq12tt6uvqgm0p13r2g6720t4m.apps.googleusercontent.com
-            client-secret: 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
-            scope: profile, email
-            redirect-uri: "http://localhost:8080/login/oauth2/code/google"
-            authorization-grant-type: authorization_code
-            client-name: Google
+  datasource:
+        url: jdbc:postgresql://ap-south-1.000a698e-9531-4f05-81c7-2b0e60704508.aws.yugabyte.cloud:5433/user_db
+        username: admin
+        password: LMI7EUdijsBdjbKs6rrRdTBWBs2Irw
+        driver-class-name: org.postgresql.Driver
+        hikari:
+          data-source-properties:
+            ssl: true
+            sslmode: require
+            sslrootcert: file:///C:/Users/ASUS/Downloads/root.crt
+        jpa:
+        hibernate:
+          ddl-auto: update
+        show-sql: true
+        properties:
+          hibernate:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            jdbc:
+              url: jdbc:postgresql://ap-south-1.000a698e-9531-4f05-81c7-2b0e60704508.aws.yugabyte.cloud:5433/user_db
   application:
     name: API-GATEWAY
+
   cloud:
     gateway:
       routes:
@@ -19,11 +28,22 @@ spring:
           uri: lb://USERSERVICE
           predicates:
             - Path=/users/**
+
 server:
   port: 8080
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+
+
+twilio:
+  account:
+    sid: ACef8ced0aaead209438e88b000c84b5f4
+  auth:
+    token: 6455806f53db285a2e2b36ca4f569f89
+  phone:
+    number: +18786887454
