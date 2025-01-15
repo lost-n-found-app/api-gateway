@@ -32,10 +32,6 @@ public class OTPController {
     }
 
 
-    private String generateOTP() {
-        String otp = String.valueOf((int) (Math.random() * 900000) + 100000);
-        return String.valueOf((int) (Math.random() * 900000) + 100000);
-    }
     @PostMapping("/verify-otp")
     public ResponseEntity<String> verifyOTP(@RequestParam String phoneNumber, @RequestParam String otp) {
         logger.info("Received request to verify OTP for phone number: {}", phoneNumber);

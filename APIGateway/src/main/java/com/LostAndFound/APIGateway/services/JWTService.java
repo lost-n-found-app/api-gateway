@@ -1,10 +1,12 @@
 package com.LostAndFound.APIGateway.services;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.KeyGenerator;
@@ -18,7 +20,9 @@ public class JWTService {
 
 
     private static final Logger logger = LoggerFactory.getLogger(JWTService.class);
-String secretKey="";
+
+    @Value("${jwt.secret}")
+    String secretKey;
 
 public JWTService()
 {
@@ -53,6 +57,9 @@ public String generateToken(String phoneNumber){
         return Keys.hmacShaKeyFor(keyBytes);
 
     }
+
+
+
 
 
 }

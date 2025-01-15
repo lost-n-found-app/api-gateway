@@ -26,7 +26,6 @@ public class TwilioService {
     String FROM_PHONE;
 
     public final Map<String, String> otpData = new HashMap<>();
-    private String otpp;
 
     @PostConstruct
     public void init() {
