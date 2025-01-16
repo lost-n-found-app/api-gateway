@@ -24,8 +24,8 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: USERSERVICE
-          uri: lb://USERSERVICE
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
           predicates:
             - Path=/users/**
 
@@ -44,6 +44,13 @@ twilio:
   account:
     sid: ACef8ced0aaead209438e88b000c84b5f4
   auth:
-    token: 6455806f53db285a2e2b36ca4f569f89
+    token: 9371dfb3c2b9d6c361bedea5e5c7eaea
   phone:
     number: +18786887454
+
+jwt:
+  secret: dKjmtcDhHxLwh92fP9obxBTK28+/qI7beKsaHR2hPik=
+
+logging:
+  level:
+    org.springframework.boot.context.properties: DEBUG
