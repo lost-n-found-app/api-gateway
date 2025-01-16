@@ -35,7 +35,6 @@ class JWTServiceTests {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-
         assertEquals(phoneNumber, claims.getSubject(), "Token subject should match the phone number");
         assertTrue(claims.getIssuedAt().before(new Date()), "IssuedAt date should be before the current time");
         assertTrue(claims.getExpiration().after(new Date()), "Expiration date should be after the current time");
@@ -43,18 +42,13 @@ class JWTServiceTests {
 
     @Test
     void testGeneratedTokenIsValidFor30Minutes() {
-        // Arrange
         String phoneNumber = "1234567890";
-
-        // Act
         String token = jwtService.generateToken(phoneNumber);
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtService.getKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-
-        // Assert
         long validity = claims.getExpiration().getTime() - claims.getIssuedAt().getTime();
         assertEquals(30 * 60 * 1000, validity, "Token validity should be 30 minutes");
     }
