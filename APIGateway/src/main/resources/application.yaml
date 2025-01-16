@@ -8,7 +8,7 @@ spring:
           data-source-properties:
             ssl: true
             sslmode: require
-            sslrootcert: file:///C:/Users/ASUS/Downloads/root.crt
+            sslrootcert: file:///C:/Users/hp/Downloads/root.crt
         jpa:
         hibernate:
           ddl-auto: update
@@ -28,7 +28,10 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/**
-
+        - id: PRODUCT-SERVICE
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/products/**
 server:
   port: 8080
 

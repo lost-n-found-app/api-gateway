@@ -1,0 +1,29 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 630649486741-a5060vjq12tt6uvqgm0p13r2g6720t4m.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
+            redirect-uri: "http://localhost:8080/login/oauth2/code/google"
+            authorization-grant-type: authorization_code
+            client-name: Google
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: USERSERVICE
+          uri: lb://USERSERVICE
+          predicates:
+            - Path=/users/**
+server:
+  port: 8080
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
