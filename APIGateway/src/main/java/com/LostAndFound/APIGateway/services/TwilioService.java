@@ -15,7 +15,9 @@ import java.util.Random;
 
 @Service
 public class TwilioService {
+
     private static final Logger logger = LoggerFactory.getLogger(TwilioService.class);
+
     @Value("${twilio.account.sid}")
     public String ACCOUNT_SID;
 
@@ -33,18 +35,14 @@ public class TwilioService {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
     }
 
-
     public String generateOTP() {
-
-
         return String.format("%06d", new Random().nextInt(999999));
     }
+
     public String sendOTP(String phoneNumber) {
         logger.info("Attempting to send OTP to phone number: {}", phoneNumber);
         String otp = generateOTP();
-
         try {
-
             Message.creator(
                             new PhoneNumber(phoneNumber),
                             new PhoneNumber(FROM_PHONE),
@@ -54,30 +52,25 @@ public class TwilioService {
             logger.info("OTP sent successfully to {}", phoneNumber);
         } catch (Exception e) {
             logger.error("Error sending OTP to {}: {}", phoneNumber, e.getMessage(), e);
-            e.printStackTrace();
             return "Error sending OTP";
         }
-         otpData.put(phoneNumber,otp);
-
+        otpData.put(phoneNumber, otp);
         return "OTP sent successfully";
     }
 
 
     public boolean verifyOTP(String phoneNumber, String otp) {
-        String otpp = otpData.get("+"+phoneNumber);
-
+        String otpp = otpData.get("+" + phoneNumber);
         if (otpp == null) {
             logger.warn("No OTP found for phone number: {}", phoneNumber);
             return false;
         }
-
         if (otpp.equals(otp)) {
-            otpData.remove("+"+phoneNumber);
+            otpData.remove("+" + phoneNumber);
             logger.info("OTP verified successfully for phone number: {}", phoneNumber);
             return true;
         }
         logger.warn("OTP verification failed for phone number: {}", phoneNumber);
         return false;
     }
-
 }

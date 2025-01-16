@@ -21,5 +21,4 @@ public class YugabyteController {
         logger.info("Entering cleanupIdleConnections method");
         return yugabyteService.terminateIdleConnections();
     }
-
 }

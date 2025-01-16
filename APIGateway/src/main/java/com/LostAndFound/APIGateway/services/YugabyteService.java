@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class YugabyteService {
 
@@ -17,12 +16,11 @@ public class YugabyteService {
 
     public String terminateIdleConnections() {
         String terminateQuery = """
-            SELECT pg_terminate_backend(pid) 
-            FROM pg_stat_activity 
-            WHERE state = 'idle' 
-              AND pid <> pg_backend_pid();
-            """;
-
+                SELECT pg_terminate_backend(pid) 
+                FROM pg_stat_activity 
+                WHERE state = 'idle' 
+                  AND pid <> pg_backend_pid();
+                """;
         try {
             logger.info("Attempting to terminate idle connections...");
             jdbcTemplate.execute(terminateQuery);

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OTPController {
 
     @Autowired
-    JWTService  jwtService;
+    JWTService jwtService;
 
     private static final Logger logger = LoggerFactory.getLogger(OTPController.class);
 
@@ -26,23 +26,22 @@ public class OTPController {
     @PostMapping("/send-otp")
     public ResponseEntity<String> sendOTP(@RequestParam String phoneNumber) {
         logger.info("Received request to send OTP to phone number: {}", phoneNumber);
-        phoneNumber="+"+phoneNumber;
+        phoneNumber = "+" + phoneNumber;
         String response = twilioService.sendOTP(phoneNumber);
         return ResponseEntity.ok(response);
     }
-
 
     @PostMapping("/verify-otp")
     public ResponseEntity<String> verifyOTP(@RequestParam String phoneNumber, @RequestParam String otp) {
         logger.info("Received request to verify OTP for phone number: {}", phoneNumber);
 
 
-        boolean isVerified =true;
-                isVerified=twilioService.verifyOTP(phoneNumber, otp);
+        boolean isVerified = true;
+        isVerified = twilioService.verifyOTP(phoneNumber, otp);
 
-        if (isVerified!=false) {
+        if (isVerified != false) {
             logger.info("OTP verified successfully for phone number: {}", phoneNumber);
-            String token=jwtService.generateToken(phoneNumber);
+            String token = jwtService.generateToken(phoneNumber);
             logger.debug("Generated JWT token for phone number: {}", phoneNumber);
             return ResponseEntity.ok(token);
         } else {
